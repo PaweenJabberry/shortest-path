@@ -1,10 +1,12 @@
+import java.util.List;
+
 public class Path
 {
-    private int[] pathNode;
+    private List<Integer> pathNode;
 
     private int duration;
 
-    public void setPathNode(int[] pathNode)
+    public void setPathNode(List<Integer> pathNode)
     {
         this.pathNode = pathNode;
     }
@@ -23,24 +25,8 @@ public class Path
     {
         for(int a : pathNode)
         {
-            System.out.print(""+a+"-->");
+            System.out.print("-->"+a);
         }
     }
-
-    /**
-     *  Override compareTo to order Tile by name and sequence
-     */ /*
-    @Override
-    public  int compareTo(Path o)
-    {
-        if(this.getDuration().equalsIgnoreCase(o.getDuration()))
-        {
-            return Integer.compare(this.getTileSequence(), o.getTileSequence());
-        }
-        else
-        {
-            return this.getLetter().compareTo(o.getLetter());
-        }
-    }*/
 
 }

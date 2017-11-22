@@ -1,8 +1,22 @@
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class main
 {
+    public static int getRandomWithExclusion(Random rnd, int start, int end, List<Integer> exclude)
+    {
+        int random = start + rnd.nextInt(end - start + 1 - exclude.size());
+        for (int ex : exclude) {
+            if (random < ex) {
+                break;
+            }
+            random++;
+        }
+        return random;
+    }
+
     public static void main(String args[])
     {
         Path path = new Path();
@@ -104,57 +118,96 @@ public class main
         };
 
 
-        /*------------ Test create path--------------*/
+        /*------------ Test create Generation--------------*/
 
 
+        int size2;
 
-        n = rand.nextInt(50) + 1;
+        int currentNum = 0;
+
+        int nextNum = 0;
+
+        int sum2 = 0;
+
+        int check = 0;
+
+        int insideCheck = 0;
+
+        int need = 0;
 
 
-        /*------------ Test sum duration-------------*/
+        List<Integer> num = new ArrayList<>();
+
+        List<Integer> checkNum = new ArrayList<>();
+
+        num.add(1);
 
 
-        int[] test1 = {1,5,4,9,10,19,20};
-        int[] test2 = {1,2,7,8,14,20};
-        int[] test3 = {1,2,3,8,14,20};
-        int[] test4 = {1,2,3,8,14,20};
-        int[] test5 = {1,2,3,8,14,20};
-        int sum = 0;
+        do
+        {
+            num = new ArrayList<>();
+            num.add(1);
+            currentNum = 0;
+            do
+            {
+                //System.out.println("Current Array number : "+currentNum);
+                size2 = multi2[currentNum].length - 1;
+                //System.out.println("Size : "+size2);
+                if(size2>0)
+                {
+                    n = getRandomWithExclusion(rand,0,size2,checkNum);
+                }
+                else
+                {
+                    n = 0;
+                }
+                //System.out.println("Number of random : "+n);
+                nextNum = multi2[currentNum][n];
+                //System.out.println("Next number : "+nextNum);
+                for(int a :num)
+                {
+                    if(a==nextNum)
+                    {
+                        //System.out.println("-----------------Same number------------------");
+                        check=1;
+                        insideCheck = 0;
+                        for(int c :checkNum)
+                        {
+                            if(c==n)
+                            {
+                                insideCheck = 1;
+                            }
+                            if(insideCheck==0)
+                            {
+                                checkNum.add(n);
+                            }
+                        }
+                    }
+                }
+                if(check==0)
+                {
+                    num.add(nextNum);
+                    currentNum = nextNum-1;
+                    checkNum.clear();
+                }
+                check=0;
+            } while (nextNum!=20);
 
-        sum = cal.findSum(test1,multi);
-        path.setPathNode(test1);
-        path.setDuration(sum);
-        gen1.addPaths(path);
+            path = new Path();
+            sum2 = cal.findSum(num,multi);
+            path.setPathNode(num);
+            path.setDuration(sum2);
 
-        path = new Path();
-        sum = cal.findSum(test2,multi);
-        path.setPathNode(test2);
-        path.setDuration(sum);
-        gen1.addPaths(path);
-
-        path = new Path();
-        sum = cal.findSum(test3,multi);
-        path.setPathNode(test3);
-        path.setDuration(sum);
-        gen1.addPaths(path);
-
-        path = new Path();
-        sum = cal.findSum(test4,multi);
-        path.setPathNode(test4);
-        path.setDuration(sum);
-        gen1.addPaths(path);
-
-        path = new Path();
-        sum = cal.findSum(test5,multi);
-        path.setPathNode(test5);
-        path.setDuration(sum);
-        gen1.addPaths(path);
-
-        //path.printPath();
-        //System.out.println("\nSUM of path : "+path.getDuration());
+            //System.out.println("-----------New-------------");
+            //path.printPath();
+            //System.out.println("SUM : "+path.getDuration());
+            gen1.addPaths(path);
+            need++;
+        } while (need!=100);
 
         gen1.printAllPaths();
         gen1.sortPaths();
+        System.out.println("\n---------------After Sorting--------------");
         gen1.printAllPaths();
 
     }
