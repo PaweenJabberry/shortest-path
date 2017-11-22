@@ -1,10 +1,8 @@
-import java.util.ArrayList;
-
 public class Path
 {
-    private static int[] pathNode;
+    private int[] pathNode;
 
-    private static int duration;
+    private int duration;
 
     public void setPathNode(int[] pathNode)
     {
@@ -28,5 +26,21 @@ public class Path
             System.out.print(""+a+"-->");
         }
     }
+
+    /**
+     *  Override compareTo to order Tile by name and sequence
+     */ /*
+    @Override
+    public  int compareTo(Path o)
+    {
+        if(this.getDuration().equalsIgnoreCase(o.getDuration()))
+        {
+            return Integer.compare(this.getTileSequence(), o.getTileSequence());
+        }
+        else
+        {
+            return this.getLetter().compareTo(o.getLetter());
+        }
+    }*/
 
 }

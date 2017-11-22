@@ -1,4 +1,5 @@
 import java.util.Collections;
+import java.util.Random;
 
 public class main
 {
@@ -8,6 +9,12 @@ public class main
 
         Generation gen1 = new Generation();
 
+        CalculateSum cal = new CalculateSum();
+
+        Random rand = new Random();
+
+        int  n = 0;
+
         int[] sn1 = {0,50,65,45,30,999,999,999,999,999,999,999,999,999,999,999,999,999,999,999}; //
         int[] sn2 = {50,0,60,999,999,62,27,999,999,999,999,999,999,999,999,999,999,999,999,999}; //
         int[] sn3 = {65,60,0,43,999,999,250,35,29,999,999,999,999,999,999,999,999,999,999,999}; //
@@ -16,7 +23,7 @@ public class main
         int[] sn6 = {999,62,999,999,999,0,25,999,999,999,999,136,999,999,999,999,999,999,999,999}; // 7 8 9 10
         int[] sn7 = {999,27,250,999,999,25,0,32,30,999,999,58,220,999,999,999,999,999,999,999}; // 11 12 13 14 15
         int[] sn8 = {999,999,35,999,999,999,32,0,120,999,999,61,88,20,999,999,999,999,999,999}; // 11 12 13 14 15
-        int[] sn9 = {999,999,29,17999,999,30,120,0,61,999,999,999,150,50,999,999,999,999,999}; // 11 12 13 14 15
+        int[] sn9 = {999,999,29,17,999,999,30,120,0,61,999,999,999,150,50,999,999,999,999,999}; // 11 12 13 14 15
         int[] sn10 = {999,999,999,40,999,999,999,999,61,0,32,999,999,999,194,147,999,999,110,999}; // 11 12 13 14 15
         int[] sn11 = {999,999,999,15,230,999,999,999,999,32,0,999,999,999,999,130,999,999,999,999}; // 16 17 18 19 20 21
         int[] sn12 = {999,999,999,999,999,136,58,61,999,999,999,0,144,999,999,999,161,999,999,999}; // 16 17 18 19 20 21
@@ -38,7 +45,7 @@ public class main
                 {999,62,999,999,999,0,25,999,999,999,999,136,999,999,999,999,999,999,999,999}, // 6
                 {999,27,250,999,999,25,0,32,30,999,999,58,220,999,999,999,999,999,999,999}, // 7
                 {999,999,35,999,999,999,32,0,120,999,999,61,88,20,999,999,999,999,999,999}, // 8
-                {999,999,29,17999,999,30,120,0,61,999,999,999,150,50,999,999,999,999,999}, // 9
+                {999,999,29,17,999,999,30,120,0,61,999,999,999,150,50,999,999,999,999,999}, // 9
                 {999,999,999,40,999,999,999,999,61,0,32,999,999,999,194,147,999,999,110,999}, //10
                 {999,999,999,15,230,999,999,999,999,32,0,999,999,999,999,130,999,999,999,999}, //11
                 {999,999,999,999,999,136,58,61,999,999,999,0,144,999,999,999,161,999,999,999}, //12
@@ -53,55 +60,102 @@ public class main
         };
 
         int[] node1 = { 2, 3, 4, 5};
-        int[] node2 = { 1, 3, 6, 7};
-        int[] node3 = { 1, 2, 4, 7, 8, 9};
-        int[] node4 = {1, 3, 5, 9, 10, 11};
-        int[] node5 = {1, 4, 11};
-        int[] node6 = {2, 7, 12};
-        int[] node7 = {2, 3, 6, 8, 9, 12, 13};
-        int[] node8 = {3, 7, 9, 12, 13, 14};
-        int[] node9 = {3, 4, 7, 8, 10, 14, 15};
-        int[] node10 = {4, 9, 11, 15, 16, 19};
-        int[] node11 = {4, 5, 10, 16};
-        int[] node12 = {6, 7, 8, 13, 17};
-        int[] node13 = {8, 12, 14, 17, 18};
-        int[] node14 = {8, 9, 13, 15, 18, 20};
-        int[] node15 = {9, 10, 14, 16, 19, 20};
-        int[] node16 = {10, 15, 19};
-        int[] node17 = {12, 13, 18};
-        int[] node18 = {13, 14, 17, 20};
-        int[] node19 = {10, 15, 16, 20};
-        int[] node20 = {14, 15, 18, 19};
+        int[] node2 = { 3, 6, 7};
+        int[] node3 = { 2, 4, 7, 8, 9};
+        int[] node4 = { 3, 5, 9, 10, 11};
+        int[] node5 = { 4, 11};
+        int[] node6 = { 7, 12};
+        int[] node7 = { 6, 8, 9, 12, 13};
+        int[] node8 = { 7, 9, 12, 13, 14};
+        int[] node9 = { 7, 8, 10, 14, 15};
+        int[] node10 = { 9, 11, 15, 16, 19};
+        int[] node11 = { 10, 16};
+        int[] node12 = { 13, 17};
+        int[] node13 = { 12, 14, 17, 18};
+        int[] node14 = { 13, 15, 18, 20};
+        int[] node15 = { 14, 16, 19, 20};
+        int[] node16 = { 15, 19};
+        int[] node17 = {18};
+        int[] node18 = {20};
+        int[] node19 = {20};
+        int[] node20 = {};
 
+        int[][] multi2 = new int[][]{
+                { 2, 3, 4, 5}, //1
+                { 3, 6, 7}, //2
+                { 2, 4, 7, 8, 9}, //3
+                { 3, 5, 9, 10, 11}, //4
+                { 4, 11}, //5
+                { 7, 12}, //6
+                { 6, 8, 9, 12, 13}, //7
+                { 7, 9, 12, 13, 14}, //8
+                { 7, 8, 10, 14, 15}, //9
+                { 9, 11, 15, 16, 19}, //10
+                { 10, 16}, //11
+                { 13, 17}, //12
+                { 12, 14, 17, 18}, //13
+                { 13, 15, 18, 20}, //14
+                { 14, 16, 19, 20}, //15
+                { 15, 19}, //16
+                {18}, //17
+                {20}, //18
+                {20}, //19
+                {} //20
+        };
+
+
+        /*------------ Test create path--------------*/
+
+
+
+        n = rand.nextInt(50) + 1;
 
 
         /*------------ Test sum duration-------------*/
 
-        int[] test = {1,2,3,8,14,20};
-        int currentNode;
-        int nextNode;
-        int size;
-        int i;
+
+        int[] test1 = {1,5,4,9,10,19,20};
+        int[] test2 = {1,2,7,8,14,20};
+        int[] test3 = {1,2,3,8,14,20};
+        int[] test4 = {1,2,3,8,14,20};
+        int[] test5 = {1,2,3,8,14,20};
         int sum = 0;
 
-        size = test.length-1;
-
-        for(i=0;i<size;i++)
-        {
-            currentNode = i;
-            nextNode = i+1;
-            sum += multi[test[currentNode]-1][test[nextNode]-1];
-            System.out.println("currentNode : "+test[currentNode]);
-            System.out.println("nextNode : "+test[nextNode]);
-            System.out.println("duration : "+multi[test[currentNode]-1][test[nextNode]-1]);
-        }
-        System.out.println("SUM : "+sum);
-
-        path.setPathNode(test);
+        sum = cal.findSum(test1,multi);
+        path.setPathNode(test1);
         path.setDuration(sum);
-        path.printPath();
-        System.out.println("\nSUM of path : "+path.getDuration());
-
         gen1.addPaths(path);
+
+        path = new Path();
+        sum = cal.findSum(test2,multi);
+        path.setPathNode(test2);
+        path.setDuration(sum);
+        gen1.addPaths(path);
+
+        path = new Path();
+        sum = cal.findSum(test3,multi);
+        path.setPathNode(test3);
+        path.setDuration(sum);
+        gen1.addPaths(path);
+
+        path = new Path();
+        sum = cal.findSum(test4,multi);
+        path.setPathNode(test4);
+        path.setDuration(sum);
+        gen1.addPaths(path);
+
+        path = new Path();
+        sum = cal.findSum(test5,multi);
+        path.setPathNode(test5);
+        path.setDuration(sum);
+        gen1.addPaths(path);
+
+        //path.printPath();
+        //System.out.println("\nSUM of path : "+path.getDuration());
+
+        gen1.printAllPaths();
+        gen1.sortPaths();
+        gen1.printAllPaths();
+
     }
 }
