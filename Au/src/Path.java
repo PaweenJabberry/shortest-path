@@ -1,8 +1,9 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Path
 {
-    private List<Integer> pathNode;
+    private List<Integer> pathNode = new ArrayList<>();
 
     private int duration;
 
@@ -23,10 +24,26 @@ public class Path
 
     public void printPath()
     {
-        for(int a : pathNode)
+        for(int a : this.pathNode)
         {
             System.out.print("-->"+a);
         }
+        System.out.println();
+    }
+
+    public int getPathSize()
+    {
+        return this.pathNode.size();
+    }
+
+    public int getPath(int node)
+    {
+        return pathNode.get(node);
+    }
+
+    public List<Integer> getAllPath()
+    {
+        return this.pathNode;
     }
 
 }

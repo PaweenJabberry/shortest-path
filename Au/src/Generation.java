@@ -29,9 +29,18 @@ public class Generation
         {
             System.out.println("\nPath : "+i);
             a.printPath();
-            System.out.println("\nSUM : "+a.getDuration());
+            System.out.println("SIZE : "+a.getPathSize());
+            System.out.println("SUM : "+a.getDuration());
             i++;
         }
+    }
+
+    public void printBestPaths()
+    {
+        int i = 1;
+        System.out.println("\n-----------Au path----------");
+        paths.get(i).printPath();
+        System.out.println("\nSUM : "+paths.get(i).getDuration());
     }
 
 

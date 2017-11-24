@@ -5,27 +5,22 @@ import java.util.Random;
 
 public class main
 {
-    public static int getRandomWithExclusion(Random rnd, int start, int end, List<Integer> exclude)
-    {
-        int random = start + rnd.nextInt(end - start + 1 - exclude.size());
-        for (int ex : exclude) {
-            if (random < ex) {
-                break;
-            }
-            random++;
-        }
-        return random;
-    }
-
     public static void main(String args[])
     {
-        Path path = new Path();
+        Path path;
 
         Generation gen1 = new Generation();
+
+        ArrayList<Generation> allGen = new ArrayList<>();
 
         CalculateSum cal = new CalculateSum();
 
         Random rand = new Random();
+
+        RandomWithExclusion randomWithExclusion = new RandomWithExclusion();
+
+        Crossover crossover = new Crossover();
+
 
         int  n = 0;
 
@@ -74,54 +69,54 @@ public class main
         };
 
         int[] node1 = { 2, 3, 4, 5};
-        int[] node2 = { 3, 6, 7};
-        int[] node3 = { 2, 4, 7, 8, 9};
-        int[] node4 = { 3, 5, 9, 10, 11};
-        int[] node5 = { 4, 11};
-        int[] node6 = { 7, 12};
-        int[] node7 = { 6, 8, 9, 12, 13};
-        int[] node8 = { 7, 9, 12, 13, 14};
-        int[] node9 = { 7, 8, 10, 14, 15};
-        int[] node10 = { 9, 11, 15, 16, 19};
-        int[] node11 = { 10, 16};
-        int[] node12 = { 13, 17};
-        int[] node13 = { 12, 14, 17, 18};
-        int[] node14 = { 13, 15, 18, 20};
-        int[] node15 = { 14, 16, 19, 20};
-        int[] node16 = { 15, 19};
-        int[] node17 = {18};
-        int[] node18 = {20};
-        int[] node19 = {20};
-        int[] node20 = {};
+        int[] node2 = { 1, 3, 6, 7};
+        int[] node3 = { 1, 2, 4, 7, 8, 9};
+        int[] node4 = {1, 3, 5, 9, 10, 11};
+        int[] node5 = {1, 4, 11};
+        int[] node6 = {2, 7, 12};
+        int[] node7 = {2, 3, 6, 8, 9, 12, 13};
+        int[] node8 = {3, 7, 9, 12, 13, 14};
+        int[] node9 = {3, 4, 7, 8, 10, 14, 15};
+        int[] node10 = {4, 9, 11, 15, 16, 19};
+        int[] node11 = {4, 5, 10, 16};
+        int[] node12 = {6, 7, 8, 13, 17};
+        int[] node13 = {8, 12, 14, 17, 18};
+        int[] node14 = {8, 9, 13, 15, 18, 20};
+        int[] node15 = {9, 10, 14, 16, 19, 20};
+        int[] node16 = {10, 15, 19};
+        int[] node17 = {12, 13, 18};
+        int[] node18 = {13, 14, 17, 20};
+        int[] node19 = {10, 15, 16, 20};
+        int[] node20 = {14, 15, 18, 19};
 
         int[][] multi2 = new int[][]{
                 { 2, 3, 4, 5}, //1
-                { 3, 6, 7}, //2
-                { 2, 4, 7, 8, 9}, //3
-                { 3, 5, 9, 10, 11}, //4
-                { 4, 11}, //5
-                { 7, 12}, //6
-                { 6, 8, 9, 12, 13}, //7
-                { 7, 9, 12, 13, 14}, //8
-                { 7, 8, 10, 14, 15}, //9
-                { 9, 11, 15, 16, 19}, //10
-                { 10, 16}, //11
-                { 13, 17}, //12
-                { 12, 14, 17, 18}, //13
-                { 13, 15, 18, 20}, //14
-                { 14, 16, 19, 20}, //15
-                { 15, 19}, //16
-                {18}, //17
-                {20}, //18
-                {20}, //19
-                {} //20
+                { 1, 3, 6, 7}, //2
+                { 1, 2, 4, 7, 8, 9}, //3
+                {1, 3, 5, 9, 10, 11}, //4
+                {1, 4, 11}, //5
+                {2, 7, 12}, //6
+                {2, 3, 6, 8, 9, 12, 13}, //7
+                {3, 7, 9, 12, 13, 14}, //8
+                {3, 4, 7, 8, 10, 14, 15}, //9
+                {4, 9, 11, 15, 16, 19}, //10
+                {4, 5, 10, 16}, //11
+                {6, 7, 8, 13, 17}, //12
+                {8, 12, 14, 17, 18}, //13
+                {8, 9, 13, 15, 18, 20}, //14
+                {9, 10, 14, 16, 19, 20}, //15
+                {10, 15, 19}, //16
+                {12, 13, 18}, //17
+                {13, 14, 17, 20}, //18
+                {10, 15, 16, 20}, //19
+                {14, 15, 18, 19} //20
         };
 
 
-        /*------------ Test create Generation--------------*/
+        /*------------ Create First Generation--------------*/
 
 
-        int size2;
+        int size;
 
         int currentNum = 0;
 
@@ -135,6 +130,9 @@ public class main
 
         int need = 0;
 
+        int goodPath = 0;
+
+        int badCount = 0;
 
         List<Integer> num = new ArrayList<>();
 
@@ -148,14 +146,15 @@ public class main
             num = new ArrayList<>();
             num.add(1);
             currentNum = 0;
+            goodPath=1;
             do
             {
                 //System.out.println("Current Array number : "+currentNum);
-                size2 = multi2[currentNum].length - 1;
-                //System.out.println("Size : "+size2);
-                if(size2>0)
+                size = multi2[currentNum].length - 1;
+                //System.out.println("Size : "+size);
+                if(size>0)
                 {
-                    n = getRandomWithExclusion(rand,0,size2,checkNum);
+                    n = randomWithExclusion.getRandomWithExclusion(rand,0,size,checkNum);
                 }
                 else
                 {
@@ -171,44 +170,111 @@ public class main
                         //System.out.println("-----------------Same number------------------");
                         check=1;
                         insideCheck = 0;
+                        if(checkNum.size()==0)
+                        {
+                            checkNum.add(n);
+                        }
                         for(int c :checkNum)
                         {
                             if(c==n)
                             {
                                 insideCheck = 1;
                             }
-                            if(insideCheck==0)
-                            {
-                                checkNum.add(n);
-                            }
                         }
+                        if(insideCheck==0)
+                        {
+                            checkNum.add(n);
+                        }
+                        //System.out.println("Real CheckNum : "+(checkNum.size()));
                     }
+                }
+                Collections.sort(checkNum);
+                //System.out.println("EX : ");
+                /*for(int d : checkNum)
+                {
+                    System.out.print(""+d+" ");
+                }*/
+                //System.out.println("\n");
+                if(size==checkNum.size()-1)
+                {
+                    goodPath=0;
+                    //System.out.println("-------------------Badpath!! size : "+(checkNum.size()-1));
                 }
                 if(check==0)
                 {
                     num.add(nextNum);
                     currentNum = nextNum-1;
-                    checkNum.clear();
+                    checkNum = new ArrayList<>();
                 }
                 check=0;
+                if(goodPath==0)
+                {
+                    //System.out.println("---------------------de ja");
+                    checkNum = new ArrayList<>();
+                    badCount++;
+                    break;
+                }
+                /*for(int a : num)
+                {
+                    System.out.print("-->"+a);
+                }*/
+                //System.out.println("\n\n");
             } while (nextNum!=20);
 
-            path = new Path();
-            sum2 = cal.findSum(num,multi);
-            path.setPathNode(num);
-            path.setDuration(sum2);
+            if(goodPath==1)
+            {
+                path = new Path();
+                sum2 = cal.findSum(num,multi);
+                path.setPathNode(num);
+                path.setDuration(sum2);
 
-            //System.out.println("-----------New-------------");
-            //path.printPath();
-            //System.out.println("SUM : "+path.getDuration());
-            gen1.addPaths(path);
-            need++;
+                //System.out.println("-----------New-------------");
+                //path.printPath();
+                //System.out.println("SUM : "+path.getDuration());
+                gen1.addPaths(path);
+                need++;
+            }
+
         } while (need!=100);
 
-        gen1.printAllPaths();
+        //gen1.printAllPaths();
         gen1.sortPaths();
-        System.out.println("\n---------------After Sorting--------------");
-        gen1.printAllPaths();
+        //System.out.println("\n---------------After Sorting--------------");
+        //gen1.printAllPaths();
+        //gen1.printBestPaths();
 
+        //System.out.println("Bad Count : "+badCount);
+
+
+        Generation newGen;
+
+        Generation tempGen;
+
+        /*newGen=crossover.Crossover(gen1,multi);
+
+        System.out.println("\n\nNew Gen");
+        newGen.sortPaths();
+        newGen.printAllPaths();*/
+
+        tempGen = gen1;
+        need=0;
+
+        do
+        {
+            newGen=crossover.Crossover(tempGen,multi);
+            newGen.sortPaths();
+            allGen.add(newGen);
+            tempGen = newGen;
+            need++;
+        } while (need!=5);
+
+        for(need=0;need<allGen.size();need++)
+        {
+            System.out.println("-----------------"+"Gen "+(need+1)+"-----------------");
+            tempGen=allGen.get(need);
+            //tempGen.printAllPaths();
+            tempGen.printBestPaths();
+            System.out.println(2);
+        }
     }
 }
