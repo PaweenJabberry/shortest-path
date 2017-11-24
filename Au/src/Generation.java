@@ -38,9 +38,9 @@ public class Generation
     public void printBestPaths()
     {
         int i = 1;
-        System.out.println("\n-----------Au path----------");
+        System.out.println("\n-----------best path----------");
         paths.get(i).printPath();
-        System.out.println("\nSUM : "+paths.get(i).getDuration());
+        System.out.println("SUM : "+paths.get(i).getDuration());
     }
 
 

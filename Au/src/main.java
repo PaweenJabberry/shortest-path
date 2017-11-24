@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class main
 {
@@ -20,9 +17,6 @@ public class main
         RandomWithExclusion randomWithExclusion = new RandomWithExclusion();
 
         Crossover crossover = new Crossover();
-
-
-        int  n = 0;
 
         int[] sn1 = {0,50,65,45,30,999,999,999,999,999,999,999,999,999,999,999,999,999,999,999}; //
         int[] sn2 = {50,0,60,999,999,62,27,999,999,999,999,999,999,999,999,999,999,999,999,999}; //
@@ -118,28 +112,35 @@ public class main
 
         int size;
 
-        int currentNum = 0;
+        int currentNum;
 
-        int nextNum = 0;
+        int nextNum;
 
-        int sum2 = 0;
+        int sum;
 
         int check = 0;
 
-        int insideCheck = 0;
+        int insideCheck;
 
         int need = 0;
 
-        int goodPath = 0;
+        int goodPath;
 
-        int badCount = 0;
+        int  n;
+
+        int i=0;
 
         List<Integer> num = new ArrayList<>();
 
         List<Integer> checkNum = new ArrayList<>();
 
-        num.add(1);
 
+
+        Scanner in = new Scanner(System.in);
+        System.out.printf("How many generation? : ");
+        need = in.nextInt();
+
+        num.add(1);
 
         do
         {
@@ -211,7 +212,6 @@ public class main
                 {
                     //System.out.println("---------------------de ja");
                     checkNum = new ArrayList<>();
-                    badCount++;
                     break;
                 }
                 /*for(int a : num)
@@ -224,18 +224,18 @@ public class main
             if(goodPath==1)
             {
                 path = new Path();
-                sum2 = cal.findSum(num,multi);
+                sum = cal.findSum(num,multi);
                 path.setPathNode(num);
-                path.setDuration(sum2);
+                path.setDuration(sum);
 
                 //System.out.println("-----------New-------------");
                 //path.printPath();
                 //System.out.println("SUM : "+path.getDuration());
                 gen1.addPaths(path);
-                need++;
+                i++;
             }
 
-        } while (need!=100);
+        } while (i!=100);
 
         //gen1.printAllPaths();
         gen1.sortPaths();
@@ -257,7 +257,7 @@ public class main
         newGen.printAllPaths();*/
 
         tempGen = gen1;
-        need=0;
+        i=0;
 
         do
         {
@@ -265,16 +265,16 @@ public class main
             newGen.sortPaths();
             allGen.add(newGen);
             tempGen = newGen;
-            need++;
-        } while (need!=5);
+            i++;
+        } while (i!=need);
 
-        for(need=0;need<allGen.size();need++)
+        for(i=0;i<allGen.size();i++)
         {
-            System.out.println("-----------------"+"Gen "+(need+1)+"-----------------");
-            tempGen=allGen.get(need);
+            System.out.println("-----------------"+"Gen "+(i+1)+"-----------------");
+            tempGen=allGen.get(i);
             //tempGen.printAllPaths();
             tempGen.printBestPaths();
-            System.out.println(2);
+            System.out.println();
         }
     }
 }
