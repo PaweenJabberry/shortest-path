@@ -43,5 +43,14 @@ public class Generation
         System.out.println("SUM : "+paths.get(i).getDuration());
     }
 
+    public int getBestPaths()
+    {
+        int bestPaths;
+
+        bestPaths = paths.get(1).getDuration();
+
+        return bestPaths;
+    }
+
 
 }

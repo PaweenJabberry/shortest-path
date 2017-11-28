@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.*;
 
 public class main
@@ -18,7 +20,7 @@ public class main
 
         Crossover crossover = new Crossover();
 
-        int[] sn1 = {0,50,65,45,30,999,999,999,999,999,999,999,999,999,999,999,999,999,999,999}; //
+        /*int[] sn1 = {0,50,65,45,30,999,999,999,999,999,999,999,999,999,999,999,999,999,999,999}; //
         int[] sn2 = {50,0,60,999,999,62,27,999,999,999,999,999,999,999,999,999,999,999,999,999}; //
         int[] sn3 = {65,60,0,43,999,999,250,35,29,999,999,999,999,999,999,999,999,999,999,999}; //
         int[] sn4 = {45,999,43,0,90,999,999,999,17,40,15,999,999,999,999,999,999,999,999,999}; //
@@ -38,6 +40,7 @@ public class main
         int[] sn18 = {999,999,999,999,999,999,999,999,999,999,999,999,54,72,999,999,26,0,999,16}; // 22 23 24 25 26 27 28
         int[] sn19 = {999,999,999,999,999,999,999,999,999,110,999,999,999,999,14,89,999,999,0,72}; // 22 23 24 25 26 27 28
         int[] sn20 = {999,999,999,999,999,999,999,999,999,999,999,999,999,22,220,999,999,16,72,0}; // 22 23 24 25 26 27 28
+        */
 
         int[][] multi = new int[][]{
                 {0,50,65,45,30,999,999,999,999,999,999,999,999,999,999,999,999,999,999,999}, //1
@@ -55,14 +58,14 @@ public class main
                 {999,999,999,999,999,999,999,88,999,999,999,144,0,24,999,999,71,54,999,999}, //13
                 {999,999,999,999,999,999,999,20,150,999,999,999,24,0,40,999,999,72,999,22}, //14
                 {999,999,999,999,999,999,999,999,60,194,999,999,999,40,0,77,999,999,14,220}, //15
-                {999,999,999,999,999,999,999,999,999,147,999,999,999,999,77,0,999,999,89,999}, //16
+                {999,999,999,999,999,999,999,999,999,147,130,999,999,999,77,0,999,999,89,999}, //16
                 {999,999,999,999,999,999,999,999,999,999,999,161,71,999,999,999,0,26,999,999}, //17
                 {999,999,999,999,999,999,999,999,999,999,999,999,54,72,999,999,26,0,999,16}, //18
                 {999,999,999,999,999,999,999,999,999,110,999,999,999,999,14,89,999,999,0,72}, // 19
                 {999,999,999,999,999,999,999,999,999,999,999,999,999,22,220,999,999,16,72,0} //20
         };
 
-        int[] node1 = { 2, 3, 4, 5};
+        /*int[] node1 = { 2, 3, 4, 5};
         int[] node2 = { 1, 3, 6, 7};
         int[] node3 = { 1, 2, 4, 7, 8, 9};
         int[] node4 = {1, 3, 5, 9, 10, 11};
@@ -81,7 +84,7 @@ public class main
         int[] node17 = {12, 13, 18};
         int[] node18 = {13, 14, 17, 20};
         int[] node19 = {10, 15, 16, 20};
-        int[] node20 = {14, 15, 18, 19};
+        int[] node20 = {14, 15, 18, 19};*/
 
         int[][] multi2 = new int[][]{
                 { 2, 3, 4, 5}, //1
@@ -99,7 +102,7 @@ public class main
                 {8, 12, 14, 17, 18}, //13
                 {8, 9, 13, 15, 18, 20}, //14
                 {9, 10, 14, 16, 19, 20}, //15
-                {10, 15, 19}, //16
+                {10, 11, 15, 19}, //16
                 {12, 13, 18}, //17
                 {13, 14, 17, 20}, //18
                 {10, 15, 16, 20}, //19
@@ -122,31 +125,52 @@ public class main
 
         int insideCheck;
 
-        int need = 0;
+        int need;
 
-        int goodPath;
+        int goodPath = 0;
 
         int  n;
 
         int i=0;
 
-        List<Integer> num = new ArrayList<>();
+        int startPoint;
+
+        int endPoint;
+
+        int veryGood = 0;
+
+        int tempBest = 0;
+
+        List<Integer> num;
 
         List<Integer> checkNum = new ArrayList<>();
 
-
-
         Scanner in = new Scanner(System.in);
+
+        do
+        {
+            goodPath=1;
+            System.out.printf("Enter start point ? : ");
+            startPoint = in.nextInt();
+            System.out.printf("Enter end point ? : ");
+            endPoint = in.nextInt();
+            if(startPoint==endPoint)
+            {
+                System.out.println("start point and end point not should be the same.");
+                goodPath=0;
+            }
+        } while (goodPath!=1);
+
         System.out.printf("How many generation? : ");
         need = in.nextInt();
 
-        num.add(1);
+        long start = System.currentTimeMillis();
 
         do
         {
             num = new ArrayList<>();
-            num.add(1);
-            currentNum = 0;
+            num.add(startPoint);
+            currentNum = startPoint-1;
             goodPath=1;
             do
             {
@@ -219,7 +243,7 @@ public class main
                     System.out.print("-->"+a);
                 }*/
                 //System.out.println("\n\n");
-            } while (nextNum!=20);
+            } while (nextNum!=endPoint);
 
             if(goodPath==1)
             {
@@ -259,6 +283,8 @@ public class main
         tempGen = gen1;
         i=0;
 
+        tempBest = gen1.getBestPaths();
+        goodPath=0;
         do
         {
             newGen=crossover.Crossover(tempGen,multi);
@@ -266,6 +292,19 @@ public class main
             allGen.add(newGen);
             tempGen = newGen;
             i++;
+            if(tempGen.getBestPaths()==tempBest)
+            {
+                goodPath++;
+            }
+            else
+            {
+                goodPath=0;
+                tempBest=tempGen.getBestPaths();
+            }
+            if(goodPath==3)
+            {
+                break;
+            }
         } while (i!=need);
 
         for(i=0;i<allGen.size();i++)
@@ -276,5 +315,8 @@ public class main
             tempGen.printBestPaths();
             System.out.println();
         }
+        long end = System.currentTimeMillis();
+        NumberFormat formatter = new DecimalFormat("#0.00000");
+        System.out.print("Execution time is " + formatter.format((end - start) / 1000d) + " seconds");
     }
 }
